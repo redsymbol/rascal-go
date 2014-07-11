@@ -1,5 +1,7 @@
 package main
-import "fmt"
+
 func main() {
-	fmt.Println("Hello, rascal.");
+	player := Player{"Aaron"}
+	view := View{player}
+	view.RunForever()
 }
