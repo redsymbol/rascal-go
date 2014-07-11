@@ -1,7 +1,6 @@
 package main
 
 func main() {
-	player := Player{"Aaron"}
-	view := View{player}
+	view := NewView(&Player{"Aaron"})
 	view.RunForever()
 }
