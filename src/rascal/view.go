@@ -1,12 +1,32 @@
 package main
-import "fmt"
+import (
+	"code.google.com/p/goncurses"
+)
+
 type View struct {
-	Player *Player;
-	World *World;
+	Player *Player
+	World *World
+	window *goncurses.Window
 }
 
 func (view *View) RunForever() {
-	fmt.Printf("Hello, %s.\n", view.Player.Name)
+	window, err := goncurses.Init()
+	if err != nil {
+		panic(err)
+	}
+	defer goncurses.End()
+	
+	goncurses.CBreak(true)
+	goncurses.Echo(false)
+	window.Clear()
+	var ch goncurses.Key
+
+	for ;; {
+		ch = window.GetChar()
+		if ch == 'q' {
+			break
+		}
+	}
 }
 
 func NewView(player *Player) *View {
@@ -14,5 +34,6 @@ func NewView(player *Player) *View {
 	return &View{
 		player,
 		world,
+		nil,
 	}
 }
