@@ -44,13 +44,23 @@ func (view *View) RunForever() {
 }
 
 func (view *View) InitPaint() {
+	window := view.Window
+	player := view.Player
+	// draw terrain
 	for xx, row := range view.World.Terrain {
 		for yy, symbol := range row {
-			view.Window.Move(xx, yy)
-			view.Window.DelChar()
-			view.Window.AddChar(symbol)
+			window.Move(xx, yy)
+			window.DelChar()
+			window.AddChar(symbol)
 		}
 	}
+	// position actors
+	player.X = 5
+	player.Y = 5
+	// draw player
+	window.MoveAddChar(player.X, player.Y, player.Symbol())
+	window.Move(player.X, player.Y)
+	window.Refresh()
 }
 
 func (view *View) Paint() {
