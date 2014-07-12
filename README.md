@@ -4,7 +4,7 @@ Rascal is a very simple roguelike game. I like to re-implement it in
 different languages, as an exercise in learning a new language more
 deeply.
 
-This is the go version.
+This is the go version. It's not really functional yet.
 
 BUILD & INSTALL
 
