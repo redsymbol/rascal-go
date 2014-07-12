@@ -1,8 +1,8 @@
 package main
 
 import (
-	"strings"
 	"code.google.com/p/goncurses"
+	"strings"
 )
 
 var _WORLD_MAPPING string = `
@@ -29,13 +29,12 @@ var _WORLD_MAPPING string = `
 ############################################################
 `
 
-
 type World struct {
-	Player *Player
+	Player  *Player
 	Terrain [][]goncurses.Char
 }
 
-func NewWorld(player *Player) *World{
+func NewWorld(player *Player) *World {
 	world := new(World)
 	world.Player = player
 	world.TerrainFromMapping(_WORLD_MAPPING)

@@ -1,11 +1,12 @@
 package main
+
 import (
 	"code.google.com/p/goncurses"
 )
 
 type View struct {
 	Player *Player
-	World *World
+	World  *World
 	Window *goncurses.Window
 }
 
@@ -25,7 +26,7 @@ func (view *View) RunForever() {
 		panic(err)
 	}
 	defer goncurses.End()
-	
+
 	goncurses.CBreak(true)
 	goncurses.Echo(false)
 	window.Clear()
@@ -33,13 +34,13 @@ func (view *View) RunForever() {
 
 	view.InitPaint()
 
-	for ;; {
+	for {
 		ch = window.GetChar()
 		if ch == 'q' {
 			break
 		}
 		view.Paint()
-		
+
 	}
 }
 
