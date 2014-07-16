@@ -1,5 +1,4 @@
 package main
-
 import (
 	"code.google.com/p/goncurses"
 )
@@ -39,8 +38,11 @@ func (view *View) RunForever() {
 		if ch == 'q' {
 			break
 		}
+		
+		if handler, ok := HandlerMap[ch]; ok {
+			handler(view.World)
+		}
 		view.Paint()
-
 	}
 }
 
@@ -65,4 +67,18 @@ func (view *View) InitPaint() {
 }
 
 func (view *View) Paint() {
+	window := view.Window
+	player := view.Player
+	// draw terrain
+	for xx, row := range view.World.Terrain {
+		for yy, symbol := range row {
+			window.Move(xx, yy)
+			window.DelChar()
+			window.AddChar(symbol)
+		}
+	}
+	// draw player
+	window.MoveAddChar(player.X, player.Y, player.Symbol())
+	window.Move(player.X, player.Y)
+	window.Refresh()
 }
