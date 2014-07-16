@@ -6,7 +6,7 @@ import (
 
 type Player struct {
 	Name string
-	X, Y int
+	Point
 }
 
 func (p *Player) Symbol() goncurses.Char {
