@@ -62,3 +62,16 @@ func (world *World) TerrainFromMapping(mapping string) {
 		}
 	}
 }
+
+func (world *World) MovePlayerTo(xdiff, ydiff int) {
+	new_x := world.Player.X + xdiff
+	new_y := world.Player.Y + ydiff
+	if world.Occupiable(new_x, new_y) {
+		world.Player.X = new_x
+		world.Player.Y = new_y
+	}
+}
+
+func (world *World) Occupiable(xx, yy int) bool {
+	return world.Terrain[xx][yy] == ' '
+}
