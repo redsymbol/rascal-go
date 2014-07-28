@@ -48,7 +48,6 @@ func (view *View) RunForever() {
 
 func (view *View) InitPaint() {
 	window := view.Window
-	player := view.Player
 	// draw terrain
 	for xx, row := range view.World.Terrain {
 		for yy, symbol := range row {
@@ -57,17 +56,14 @@ func (view *View) InitPaint() {
 			window.AddChar(symbol)
 		}
 	}
-	// position actors
+	// position and initially paint actors
 	view.World.PositionActors()
-	// draw player
-	window.MoveAddChar(player.X, player.Y, player.Symbol())
-	window.Move(player.X, player.Y)
+	view.PaintActors()
 	window.Refresh()
 }
 
 func (view *View) Paint() {
 	window := view.Window
-	player := view.Player
 	// draw terrain
 	for xx, row := range view.World.Terrain {
 		for yy, symbol := range row {
@@ -76,8 +72,19 @@ func (view *View) Paint() {
 			window.AddChar(symbol)
 		}
 	}
-	// draw player
-	window.MoveAddChar(player.X, player.Y, player.Symbol())
-	window.Move(player.X, player.Y)
+	view.PaintActors()
 	window.Refresh()
+}
+
+func (view *View) PaintActors() {
+	window := view.Window
+	player := view.Player
+	// draw monsters
+	for _, monster := range view.World.Monsters {
+		window.MoveAddChar(monster.X, monster.Y, monster.Symbol)
+		window.Move(monster.X, monster.Y)
+	}
+	// draw player
+	window.MoveAddChar(player.X, player.Y, player.Symbol)
+	window.Move(player.X, player.Y)
 }

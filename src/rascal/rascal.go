@@ -7,6 +7,6 @@ import (
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	view := NewView(&Player{Name: "Aaron"})
+	view := NewView(NewPlayer("Aaron"))
 	view.RunForever()
 }

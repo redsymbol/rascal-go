@@ -1,14 +1,10 @@
 package main
 
-import (
-	"code.google.com/p/goncurses"
-)
+type Player Actor
 
-type Player struct {
-	Name string
-	Point
-}
-
-func (p *Player) Symbol() goncurses.Char {
-	return '@'
+func NewPlayer(name string) * Player{
+	return &Player{
+		Name	: name,
+		Symbol	: '@',
+	}
 }

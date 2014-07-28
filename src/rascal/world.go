@@ -32,6 +32,7 @@ var _WORLD_MAPPING string = `
 
 type World struct {
 	Player  *Player
+	Monsters []*Monster
 	Terrain [][]goncurses.Char
 	Width, Height int
 }
@@ -39,6 +40,7 @@ type World struct {
 func NewWorld(player *Player) *World {
 	world := new(World)
 	world.Player = player
+	world.Monsters = make([]*Monster, 0, 0)
 	world.TerrainFromMapping(_WORLD_MAPPING)
 	return world
 }
@@ -74,11 +76,18 @@ func (world *World) MovePlayerTo(xdiff, ydiff int) {
 }
 
 func (world *World) Occupiable(xx, yy int) bool {
-	return world.Terrain[xx][yy] == ' '
+	if world.Terrain[xx][yy] == '#' {
+		return false
+	}
+	for _, monster := range world.Monsters {
+		if monster.X == xx && monster.Y == yy {
+			return false
+		}
+	}
+	return true
 }
 
-func (world *World) PositionActors() {
-	var xx, yy int
+func (world *World) findFreePosition() (xx, yy int) {
 	for ;; {
 		xx = rand.Intn(world.Height)
 		yy = rand.Intn(world.Width)
@@ -86,6 +95,17 @@ func (world *World) PositionActors() {
 			break
 		}
 	}
-	world.Player.X = xx
-	world.Player.Y = yy
+	return
+}
+
+func (world *World) PositionActors() {
+	world.Player.X, world.Player.Y = world.findFreePosition()
+	monsters := [...]*Monster{
+		NewRat(),
+		NewGiantRat(),
+	}
+	for _, monster := range(monsters) {
+		monster.X, monster.Y = world.findFreePosition()
+		world.Monsters = append(world.Monsters, monster)
+	}
 }
