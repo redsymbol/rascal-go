@@ -58,8 +58,7 @@ func (view *View) InitPaint() {
 		}
 	}
 	// position actors
-	player.X = 5
-	player.Y = 5
+	view.World.PositionActors()
 	// draw player
 	window.MoveAddChar(player.X, player.Y, player.Symbol())
 	window.Move(player.X, player.Y)

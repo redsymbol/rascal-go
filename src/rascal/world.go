@@ -3,6 +3,7 @@ package main
 import (
 	"code.google.com/p/goncurses"
 	"strings"
+	"math/rand"
 )
 
 var _WORLD_MAPPING string = `
@@ -74,4 +75,17 @@ func (world *World) MovePlayerTo(xdiff, ydiff int) {
 
 func (world *World) Occupiable(xx, yy int) bool {
 	return world.Terrain[xx][yy] == ' '
+}
+
+func (world *World) PositionActors() {
+	var xx, yy int
+	for ;; {
+		xx = rand.Intn(world.Height)
+		yy = rand.Intn(world.Width)
+		if world.Occupiable(xx, yy) {
+			break
+		}
+	}
+	world.Player.X = xx
+	world.Player.Y = yy
 }
