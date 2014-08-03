@@ -52,19 +52,8 @@ func (view *View) RunForever() {
 }
 
 func (view *View) InitPaint() {
-	window := view.Window
-	// draw terrain
-	for xx, row := range view.World.Terrain {
-		for yy, symbol := range row {
-			window.Move(xx, yy)
-			window.DelChar()
-			window.AddChar(symbol)
-		}
-	}
-	// position and initially paint actors
 	view.World.PositionActors()
-	view.PaintActors()
-	window.Refresh()
+	view.Paint()
 }
 
 func (view *View) Paint() {
@@ -77,8 +66,14 @@ func (view *View) Paint() {
 			window.AddChar(symbol)
 		}
 	}
+	view.PaintDashboard()
 	view.PaintActors()
 	window.Refresh()
+}
+
+func (view *View) PaintDashboard() {
+	view.Window.Move(view.World.Height + 1, 0)
+	view.Window.Printf("HP %d", view.World.Player.Hitpoints)
 }
 
 func (view *View) PaintActors() {
