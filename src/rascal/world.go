@@ -31,16 +31,16 @@ var _WORLD_MAPPING string = `
 `
 
 type World struct {
-	Player        *Player
-	Monsters      []*Monster
+	Player        *Actor
+	Monsters      []*Actor
 	Terrain       [][]goncurses.Char
 	Width, Height int
 }
 
-func NewWorld(player *Player) *World {
+func NewWorld(player *Actor) *World {
 	world := new(World)
 	world.Player = player
-	world.Monsters = make([]*Monster, 0, 0)
+	world.Monsters = make([]*Actor, 0, 0)
 	world.TerrainFromMapping(_WORLD_MAPPING)
 	return world
 }
@@ -100,7 +100,7 @@ func (world *World) findFreePosition() (xx, yy int) {
 
 func (world *World) PositionActors() {
 	world.Player.X, world.Player.Y = world.findFreePosition()
-	monsters := [...]*Monster{
+	monsters := [...]*Actor{
 		NewRat(),
 		NewGiantRat(),
 	}

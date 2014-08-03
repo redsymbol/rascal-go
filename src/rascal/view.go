@@ -5,12 +5,12 @@ import (
 )
 
 type View struct {
-	Player *Player
+	Player *Actor
 	World  *World
 	Window *goncurses.Window
 }
 
-func NewView(player *Player) *View {
+func NewView(player *Actor) *View {
 	world := NewWorld(player)
 	return &View{
 		player,
