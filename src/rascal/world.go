@@ -110,11 +110,11 @@ func (world *World) PositionActors() {
 	}
 }
 
-func (world *World) MoveMonsters() {
+func (world *World) RunMonsterActions() {
 	for _, monster := range world.Monsters {
 
 		if monster.AdjacentTo(world.Player.X, world.Player.Y) {
-			//monster.Attack(world.Player)
+			monster.Attack(world.Player)
 		} else {
 			var dx, dy, abs_dx, abs_dy, offset_x, offset_y int
 			dx = world.Player.X - monster.X

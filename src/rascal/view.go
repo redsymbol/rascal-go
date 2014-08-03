@@ -43,7 +43,10 @@ func (view *View) RunForever() {
 		if handler, ok := HandlerMap[ch]; ok {
 			handler(view.World)
 		}
-		view.World.MoveMonsters()
+		view.World.RunMonsterActions()
+		if view.World.Player.Hitpoints <= 0 {
+			return
+		}
 		view.Paint()
 	}
 }

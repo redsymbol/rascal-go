@@ -10,8 +10,17 @@ type Mover interface {
 	AdjacentTo(x, y int) bool
 }
 
-type Actor struct {
-	Name   string
-	Symbol goncurses.Char
+type Combatter interface {
+	Attack(other *Combatter)
+	ReduceHitpoints(damage int)
+	GetDamage() int
+}
+
+type ActorBase struct {
+	Name      string
+	Symbol    goncurses.Char
+	Hitpoints int
+	Damage    int
 	Point
 }
+
