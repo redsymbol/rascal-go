@@ -57,7 +57,7 @@ func NewPlayer(name string) *Actor {
 	return &Actor{
 		Name:   name,
 		Symbol: '@',
-		Hitpoints: 2,
+		Hitpoints: 10,
 		Damage: 1,
 	}
 }
