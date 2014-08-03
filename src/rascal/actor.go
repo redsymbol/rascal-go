@@ -11,7 +11,7 @@ type Mover interface {
 }
 
 type Actor struct {
-	Name      string
-	Symbol    goncurses.Char
+	Name   string
+	Symbol goncurses.Char
 	Point
 }
