@@ -2,8 +2,8 @@ package main
 
 import (
 	"code.google.com/p/goncurses"
-	"strings"
 	"math/rand"
+	"strings"
 )
 
 var _WORLD_MAPPING string = `
@@ -31,9 +31,9 @@ var _WORLD_MAPPING string = `
 `
 
 type World struct {
-	Player  *Player
-	Monsters []*Monster
-	Terrain [][]goncurses.Char
+	Player        *Player
+	Monsters      []*Monster
+	Terrain       [][]goncurses.Char
 	Width, Height int
 }
 
@@ -88,7 +88,7 @@ func (world *World) Occupiable(xx, yy int) bool {
 }
 
 func (world *World) findFreePosition() (xx, yy int) {
-	for ;; {
+	for {
 		xx = rand.Intn(world.Height)
 		yy = rand.Intn(world.Width)
 		if world.Occupiable(xx, yy) {
@@ -104,7 +104,7 @@ func (world *World) PositionActors() {
 		NewRat(),
 		NewGiantRat(),
 	}
-	for _, monster := range(monsters) {
+	for _, monster := range monsters {
 		monster.X, monster.Y = world.findFreePosition()
 		world.Monsters = append(world.Monsters, monster)
 	}

@@ -1,4 +1,5 @@
 package main
+
 import (
 	"code.google.com/p/goncurses"
 )
@@ -38,7 +39,7 @@ func (view *View) RunForever() {
 		if ch == 'q' {
 			break
 		}
-		
+
 		if handler, ok := HandlerMap[ch]; ok {
 			handler(view.World)
 		}

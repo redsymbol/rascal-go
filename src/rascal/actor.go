@@ -5,7 +5,7 @@ import (
 )
 
 type Actor struct {
-	Name string
+	Name   string
 	Symbol goncurses.Char
 	Point
 }
