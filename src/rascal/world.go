@@ -66,12 +66,12 @@ func (world *World) TerrainFromMapping(mapping string) {
 	}
 }
 
-func (world *World) MovePlayerTo(xdiff, ydiff int) {
-	new_x := world.Player.X + xdiff
-	new_y := world.Player.Y + ydiff
+func (world *World) MoveActorBy(mover Mover, xdiff, ydiff int) {
+	current_x, current_y := mover.GetPosition()
+	new_x := current_x + xdiff
+	new_y := current_y + ydiff
 	if world.Occupiable(new_x, new_y) {
-		world.Player.X = new_x
-		world.Player.Y = new_y
+		mover.SetPosition(new_x, new_y)
 	}
 }
 
@@ -108,4 +108,64 @@ func (world *World) PositionActors() {
 		monster.X, monster.Y = world.findFreePosition()
 		world.Monsters = append(world.Monsters, monster)
 	}
+}
+
+func (world *World) MoveMonsters() {
+	for _, monster := range world.Monsters {
+		
+		if monster.AdjacentTo(world.Player.X, world.Player.Y) {
+			//monster.Attack(world.Player)
+		} else {
+			var dx, dy, abs_dx, abs_dy, offset_x, offset_y int
+			dx = world.Player.X - monster.X
+			dy = world.Player.Y - monster.Y
+			if dx < 0 {
+				abs_dx = -1 * dx
+			} else {
+				abs_dx = dx
+			}
+			if dy < 0 {
+				abs_dy = -1 * dy
+			} else {
+				abs_dy = dy
+			}
+			if abs_dx > abs_dy {
+				offset_y = 0
+				if dx > 0 {
+					offset_x = 1
+				} else {
+					offset_x = -1
+				}
+			} else {
+				offset_x = 0
+				if dy > 0 {
+					offset_y = 1
+				} else {
+					offset_y = -1
+				}
+			}
+			new_x := monster.X + offset_x
+			new_y := monster.Y + offset_y
+			if world.Occupiable(new_x, new_y) {
+				monster.SetPosition(new_x, new_y)
+			}
+		}
+
+	}
+}
+
+func unit_of(num int) int {
+	if num > 0 {
+		num = 1
+	} else if num < 0 {
+		num = -1
+	}
+	return num
+}
+
+func abs(num int) int {
+	if num < 1 {
+		return -1 * num
+	}
+	return num
 }

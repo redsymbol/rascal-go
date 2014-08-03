@@ -43,6 +43,7 @@ func (view *View) RunForever() {
 		if handler, ok := HandlerMap[ch]; ok {
 			handler(view.World)
 		}
+		view.World.MoveMonsters()
 		view.Paint()
 	}
 }
