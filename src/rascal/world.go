@@ -149,11 +149,7 @@ func (world *World) RunMonsterActions() {
 					offset_y = -1
 				}
 			}
-			new_x := monster.X + offset_x
-			new_y := monster.Y + offset_y
-			if world.Occupiable(new_x, new_y) {
-				monster.SetPosition(new_x, new_y)
-			}
+			world.MoveActorBy(monster, offset_x, offset_y)
 		}
 
 	}
