@@ -5,17 +5,17 @@ import (
 )
 
 type View struct {
-	Player *Actor
-	World  *World
-	Window *goncurses.Window
+	Player         *Actor
+	World          *World
+	Window         *goncurses.Window
 }
 
 func NewView(player *Actor) *View {
 	world := NewWorld(player)
 	return &View{
-		player,
-		world,
-		nil,
+		Player:         player,
+		World:          world,
+		Window:         nil,
 	}
 }
 
@@ -67,13 +67,29 @@ func (view *View) Paint() {
 		}
 	}
 	view.PaintDashboard()
+	view.PaintMessage()
 	view.PaintActors()
 	window.Refresh()
 }
 
 func (view *View) PaintDashboard() {
-	view.Window.Move(view.World.Height + 1, 0)
+	start_x := view.World.Height + 1
+	start_y := 0
+	view.ClearLine(start_x)
+	view.Window.Move(start_x, start_y)
 	view.Window.Printf("HP %d", view.World.Player.Hitpoints)
+}
+
+func (view *View) PaintMessage() {
+	start_x := view.World.Height + 2
+	start_y := 0
+	view.Window.Move(start_x, start_y)
+	view.ClearLine(start_x)
+	view.Window.Printf(view.World.GetMessage())
+}
+
+func (view *View) ClearLine(lineno int) {
+	view.Window.HLine(lineno, 0, ' ', view.World.Width)
 }
 
 func (view *View) PaintActors() {

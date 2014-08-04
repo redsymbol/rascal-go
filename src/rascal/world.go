@@ -2,6 +2,7 @@ package main
 
 import (
 	"code.google.com/p/goncurses"
+	"fmt"
 	"math/rand"
 	"strings"
 )
@@ -31,10 +32,12 @@ var _WORLD_MAPPING string = `
 `
 
 type World struct {
-	Player        *Actor
-	Monsters      []*Actor
-	Terrain       [][]goncurses.Char
-	Width, Height int
+	Player         *Actor
+	Monsters       []*Actor
+	Terrain        [][]goncurses.Char
+	Width, Height  int
+	Message        string
+	currentMessage string
 }
 
 func NewWorld(player *Actor) *World {
@@ -42,6 +45,7 @@ func NewWorld(player *Actor) *World {
 	world.Player = player
 	world.Monsters = make([]*Actor, 0, 0)
 	world.TerrainFromMapping(_WORLD_MAPPING)
+	world.currentMessage = ""
 	return world
 }
 
@@ -114,6 +118,7 @@ func (world *World) RunMonsterActions() {
 	for _, monster := range world.Monsters {
 
 		if monster.AdjacentTo(world.Player.X, world.Player.Y) {
+			world.AddMessage(fmt.Sprintf("%s hits you for %d damage!", monster.Name, monster.Damage))
 			monster.Attack(world.Player)
 		} else {
 			var dx, dy, abs_dx, abs_dy, offset_x, offset_y int
@@ -152,6 +157,14 @@ func (world *World) RunMonsterActions() {
 		}
 
 	}
+}
+
+func (world *World) AddMessage(msg string) {
+	world.currentMessage = msg
+}
+
+func (world *World) GetMessage() string {
+	return world.currentMessage
 }
 
 func unit_of(num int) int {
