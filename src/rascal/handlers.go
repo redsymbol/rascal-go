@@ -7,19 +7,19 @@ import (
 type HandlerMapType map[goncurses.Key]func(*World)
 
 func handler_move_left(world *World) {
-	world.MoveActorBy(world.Player, 0, -1)
+	world.HandlePlayerMove(0, -1)
 }
 
 func handler_move_right(world *World) {
-	world.MoveActorBy(world.Player, 0, 1)
+	world.HandlePlayerMove(0, 1)
 }
 
 func handler_move_up(world *World) {
-	world.MoveActorBy(world.Player, -1, 0)
+	world.HandlePlayerMove(-1, 0)
 }
 
 func handler_move_down(world *World) {
-	world.MoveActorBy(world.Player, 1, 0)
+	world.HandlePlayerMove(1, 0)
 }
 
 var HandlerMap HandlerMapType = HandlerMapType{

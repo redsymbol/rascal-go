@@ -5,17 +5,17 @@ import (
 )
 
 type View struct {
-	Player         *Actor
-	World          *World
-	Window         *goncurses.Window
+	Player *Actor
+	World  *World
+	Window *goncurses.Window
 }
 
 func NewView(player *Actor) *View {
 	world := NewWorld(player)
 	return &View{
-		Player:         player,
-		World:          world,
-		Window:         nil,
+		Player: player,
+		World:  world,
+		Window: nil,
 	}
 }
 
@@ -96,7 +96,7 @@ func (view *View) PaintActors() {
 	window := view.Window
 	player := view.Player
 	// draw monsters
-	for _, monster := range view.World.Monsters {
+	for _, monster := range view.World.AliveMonsters() {
 		window.MoveAddChar(monster.X, monster.Y, monster.Symbol)
 		window.Move(monster.X, monster.Y)
 	}

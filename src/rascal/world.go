@@ -83,7 +83,7 @@ func (world *World) Occupiable(xx, yy int) bool {
 	if world.Terrain[xx][yy] == '#' {
 		return false
 	}
-	for _, monster := range world.Monsters {
+	for _, monster := range world.AliveMonsters() {
 		if monster.X == xx && monster.Y == yy {
 			return false
 		}
@@ -114,9 +114,18 @@ func (world *World) PositionActors() {
 	}
 }
 
-func (world *World) RunMonsterActions() {
+func (world *World) AliveMonsters() []*Actor {
+	monsters := make([]*Actor, 0, 0)
 	for _, monster := range world.Monsters {
+		if monster.IsAlive() {
+			monsters = append(monsters, monster)
+		}
+	}
+	return monsters
+}
 
+func (world *World) RunMonsterActions() {
+	for _, monster := range world.AliveMonsters() {
 		if monster.AdjacentTo(world.Player.X, world.Player.Y) {
 			world.AddMessage(fmt.Sprintf("%s hits you for %d damage!", monster.Name, monster.Damage))
 			monster.Attack(world.Player)
@@ -161,6 +170,27 @@ func (world *World) AddMessage(msg string) {
 
 func (world *World) GetMessage() string {
 	return world.currentMessage
+}
+
+func (world *World) HandlePlayerMove(offset_x, offset_y int) {
+	target_x := world.Player.X + offset_x
+	target_y := world.Player.Y + offset_y
+	var monster *Actor = nil
+	for _, this_monster := range world.AliveMonsters() {
+		if this_monster.X == target_x && this_monster.Y == target_y {
+			monster = this_monster
+			break
+		}
+	}
+	if monster == nil {
+		world.MoveActorBy(world.Player, offset_x, offset_y)
+	} else {
+		world.AddMessage(fmt.Sprintf("You hit the %s for %d damage.", monster.Name, world.Player.Damage))
+		world.Player.Attack(monster)
+		if !monster.IsAlive() {
+			world.AddMessage(fmt.Sprintf("You have slain the %s!", monster.Name))
+		}
+	}
 }
 
 func unit_of(num int) int {

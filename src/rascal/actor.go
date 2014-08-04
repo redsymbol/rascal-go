@@ -25,40 +25,44 @@ type Actor struct {
 }
 
 // Actor methods
-func (monster *Actor) SetPosition(x, y int) {
-	monster.X = x
-	monster.Y = y
+func (actor *Actor) SetPosition(x, y int) {
+	actor.X = x
+	actor.Y = y
 }
 
-func (monster *Actor) GetPosition() (x, y int) {
-	x = monster.X
-	y = monster.Y
+func (actor *Actor) GetPosition() (x, y int) {
+	x = actor.X
+	y = actor.Y
 	return
 }
 
-func (monster *Actor) AdjacentTo(x, y int) bool {
-	return PointsAdjacent(monster.X, monster.Y, x, y)
+func (actor *Actor) AdjacentTo(x, y int) bool {
+	return PointsAdjacent(actor.X, actor.Y, x, y)
 }
 
-func (monster *Actor) GetDamage() int {
-	return monster.Damage 
+func (actor *Actor) GetDamage() int {
+	return actor.Damage
 }
 
-func (monster *Actor) Attack(other *Actor) {
-	other.ReduceHitpoints(monster.GetDamage())
+func (actor *Actor) Attack(other *Actor) {
+	other.ReduceHitpoints(actor.GetDamage())
 }
 
-func (monster *Actor) ReduceHitpoints(damage int) {
-	monster.Hitpoints -= damage
+func (actor *Actor) ReduceHitpoints(damage int) {
+	actor.Hitpoints -= damage
+}
+
+func (actor *Actor) IsAlive() bool {
+	return actor.Hitpoints > 0
 }
 
 // New actor constructors
 func NewPlayer(name string) *Actor {
 	return &Actor{
-		Name:   name,
-		Symbol: '@',
+		Name:      name,
+		Symbol:    '@',
 		Hitpoints: 10,
-		Damage: 1,
+		Damage:    1,
 	}
 }
 
@@ -79,4 +83,3 @@ func NewGiantRat() *Actor {
 		Damage:    1,
 	}
 }
-
