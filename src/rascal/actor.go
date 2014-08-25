@@ -83,3 +83,12 @@ func NewGiantRat() *Actor {
 		Damage:    1,
 	}
 }
+
+func NewGoblin() *Actor {
+	return &Actor{
+		Name:      "goblin",
+		Symbol:    'g',
+		Hitpoints: 1,
+		Damage:    2,
+	}
+}

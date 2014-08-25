@@ -106,7 +106,13 @@ func (world *World) PositionActors() {
 	world.Player.X, world.Player.Y = world.findFreePosition()
 	monsters := [...]*Actor{
 		NewRat(),
+		NewRat(),
+		NewRat(),
 		NewGiantRat(),
+		NewGiantRat(),
+		NewGoblin(),
+		NewGoblin(),
+		NewGoblin(),
 	}
 	for _, monster := range monsters {
 		monster.X, monster.Y = world.findFreePosition()
