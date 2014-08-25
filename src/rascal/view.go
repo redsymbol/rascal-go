@@ -47,6 +47,9 @@ func (view *View) RunForever() {
 		if view.World.Player.Hitpoints <= 0 {
 			return
 		}
+		if len(view.World.AliveMonsters()) == 0 {
+			return
+		}
 		view.Paint()
 	}
 }
