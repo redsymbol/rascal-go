@@ -19,7 +19,7 @@ func NewView(player *Actor) *View {
 	}
 }
 
-func (view *View) RunForever() {
+func (view *View) RunForever() string {
 	window, err := goncurses.Init()
 	view.Window = window
 	if err != nil {
@@ -45,13 +45,14 @@ func (view *View) RunForever() {
 		}
 		view.World.RunMonsterActions()
 		if view.World.Player.Hitpoints <= 0 {
-			return
+			return "You have been slain!"
 		}
 		if len(view.World.AliveMonsters()) == 0 {
-			return
+			return "You have vanquished all the monsters!"
 		}
 		view.Paint()
 	}
+	return ""
 }
 
 func (view *View) InitPaint() {

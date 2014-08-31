@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -8,5 +9,8 @@ import (
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	view := NewView(NewPlayer("Aaron"))
-	view.RunForever()
+	exit_message := view.RunForever()
+	if exit_message != "" {
+		fmt.Println(exit_message)
+	}
 }
